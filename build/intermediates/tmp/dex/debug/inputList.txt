@@ -1,0 +1,6 @@
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/classes/debug
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-2d3c41770a4f62d4c94f442360fe9d726ae3cb97.jar
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/classes-9802fab58f7afcd72175a1ef3e7897e60c92bf4f.jar
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-3c3d20f16d04bf2db6c45c244eb50751d239942a.jar
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/metaiosdk-c865f648f147b5f3dea410076b7d6a4826f8fe49.jar
+/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/classes-9f406db754652cf70864fb253db3611134440757.jar
