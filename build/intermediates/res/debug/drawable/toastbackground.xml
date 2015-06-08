@@ -11,4 +11,4 @@
 		android:right="20dip" 
 		android:bottom="2dip" />
 	<corners android:radius="5dip" />
-</shape><!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/metaioSDK/res/drawable/toastbackground.xml --><!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/exploded-aar/_Android/MetaioSDK/unspecified/res/drawable/toastbackground.xml -->
+</shape><!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/metaioSDK/res/drawable/toastbackground.xml --><!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/res/drawable/toastbackground.xml -->

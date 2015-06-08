@@ -98,7 +98,6 @@
 
 				<!--	An ID that this COS is associated with. -->
 				<SensorCosID>Patch1</SensorCosID>
-
 				<!--	Parameters that should be applied to this "SensorCOS".
 						-->
 				<Parameters>
@@ -114,7 +113,7 @@
 							image.
 							These parameters are not required and are intended
 							for expert use only. -->
-					<ReferenceImage>YvesKlein.jpg</ReferenceImage>
+					<ReferenceImage>PopArt.jpg</ReferenceImage>
 					<!-- <ReferenceImage WidthMM="100" HeightMM="100">metaioman_target.png</ReferenceImage> -->
 
 					<!--	Another similarity threshold can be specified here.
@@ -138,6 +137,13 @@
 				</Parameters>
 			</SensorCOS>
 
+            <SensorCOS>
+                <SensorCosID>Patch3</SensorCosID>
+                <Parameters>
+                    <ReferenceImage>RadeauDeLaMeduse.jpg</ReferenceImage>
+                    <SimilarityThreshold>0.8</SimilarityThreshold>
+                </Parameters>
+            </SensorCOS>
 
 		</Sensor>
 	</Sensors>

@@ -1,6 +1,6 @@
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/classes/debug
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-2d3c41770a4f62d4c94f442360fe9d726ae3cb97.jar
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/classes-9802fab58f7afcd72175a1ef3e7897e60c92bf4f.jar
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-3c3d20f16d04bf2db6c45c244eb50751d239942a.jar
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/metaiosdk-c865f648f147b5f3dea410076b7d6a4826f8fe49.jar
-/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/pre-dexed/debug/classes-9f406db754652cf70864fb253db3611134440757.jar
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/classes/debug
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-2d3c41770a4f62d4c94f442360fe9d726ae3cb97.jar
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-0e20eda110765fa40d6102a15156d24e5e826c8b.jar
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-d87cc00676aba6eef9233fc18bc876198ef93755.jar
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/metaiosdk-f77e175a8f093dc1a75257ef3287866db5790f73.jar
+/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-9a1b957eb305414c611881bb5c4c5835e8949eea.jar

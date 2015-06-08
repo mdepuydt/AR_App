@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values-v14/styles.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values-v14/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar"/>
 </resources>

@@ -98,6 +98,9 @@ var myObject;
 arel.sceneReady(function()
 {
 	console.log("sceneReady");
+    arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
+	//set a listener to tracking to get information about when the image is tracked
+    arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
 
 	//acquire texture
     var image = getTexture();
@@ -120,6 +123,8 @@ arel.sceneReady(function()
 
 function trackingHandler(type, param)
 {
+    console.log(type);
+    console.log(param[0]);
 	//check if there is tracking information available
 	if (param[0] !== undefined)
 	{
@@ -127,6 +132,11 @@ function trackingHandler(type, param)
 		if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_TRACKING)
 		{
 			document.getElementById('info').style.display = "none";
+			console.log(param[0].getCoordinateSystemName());
+			if(param[0].getCoordinateSystemName() == "MarkerlessCOS2"){
+			    console.log('in');
+
+			}
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-9a1b957eb305414c611881bb5c4c5835e8949eea.jar" />
+    </item>
+    <item
+        jar="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/libs/metaiosdk.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="1c8d9e3d40ae2b65f4ef4adf7ddc62e484388b37">
+        <dex dex="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/metaiosdk-f77e175a8f093dc1a75257ef3287866db5790f73.jar" />
+    </item>
+    <item
+        jar="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="335e50bf0a96c55618d3f113bf3e1198c0a4503b">
+        <dex dex="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-0e20eda110765fa40d6102a15156d24e5e826c8b.jar" />
+    </item>
+    <item
+        jar="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-d87cc00676aba6eef9233fc18bc876198ef93755.jar" />
+    </item>
+    <item
+        jar="/Users/marionDepuydt/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.2/support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.0"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-2d3c41770a4f62d4c94f442360fe9d726ae3cb97.jar" />
+    </item>
+
+</items>

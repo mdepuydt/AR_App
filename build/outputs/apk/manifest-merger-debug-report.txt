@@ -15,7 +15,7 @@ ADDED from AndroidManifest.xml:1:1
 		ADDED from AndroidManifest.xml:3:5
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
-MERGED from _Android:MetaioSDK:unspecified:7:5
+MERGED from AR_App:MetaioSDK:unspecified:7:5
 MERGED from com.android.support:support-v4:21.0.2:15:5
 MERGED from com.android.support:support-v4:21.0.2:15:5
 	android:targetSdkVersion

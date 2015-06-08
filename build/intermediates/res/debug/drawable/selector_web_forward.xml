@@ -10,4 +10,4 @@
     <item android:drawable="@drawable/web_forward_dis" android:state_enabled="false"/>
     <item android:drawable="@drawable/web_forward" android:state_focused="true"/>
     <item android:drawable="@drawable/web_forward"/>
-</selector><!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/metaioSDK/res/drawable/selector_web_forward.xml --><!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/exploded-aar/_Android/MetaioSDK/unspecified/res/drawable/selector_web_forward.xml -->
+</selector><!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/metaioSDK/res/drawable/selector_web_forward.xml --><!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/res/drawable/selector_web_forward.xml -->

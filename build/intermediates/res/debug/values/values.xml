@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/exploded-aar/_Android/MetaioSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/res/values/values.xml -->
     <eat-comment/>
     <bool name="isTablet">false</bool>
     <color name="button_pressed_background">#33000000</color>
@@ -292,16 +292,16 @@
     <string name="MSG_TITLE_USERS_NOT_FOUND">No users found</string>
     <string name="MSG_TITLE_VALIDATION_ERROR">Validation error</string>
     <string name="MSG_TITLE_WARNING">Warning</string>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values/strings.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">TemplateAREL</string>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values/signature.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values/signature.xml -->
     <eat-comment/>
     <string name="metaioSDKSignature">TVqcOAHPs32hD5n8KUbx/GeDsMGb6QmkCis+QZFSl7Y=</string>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values/styles.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Light"/>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/exploded-aar/_Android/MetaioSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="POIButton" parent="android:style/Widget.Button">
         <item name="android:textSize">16sp</item>
@@ -312,14 +312,14 @@
     <style name="POIButton.POIActionButton">
         <item name="android:background">@color/transparent</item>
     </style>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values/theme.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values/theme.xml -->
     <eat-comment/>
     <style name="Theme.FullScreen" parent="android:Theme">
         <item name="android:windowBackground">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/build/intermediates/exploded-aar/_Android/MetaioSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/exploded-aar/AR_App/MetaioSDK/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.Fullscreen" parent="android:Theme">
         <item name="android:windowBackground">@null</item>
@@ -331,7 +331,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
     </style>
-    <!-- From: file:/Users/marionDepuydt/Documents/repo/TX/metaioSDK/_Android/Templates_SDK/TemplateAREL/res/values/theme.xml -->
+    <!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/values/theme.xml -->
     <eat-comment/>
     <style name="Theme.Translucent" parent="android:style/Theme.Translucent">  
     	<item name="android:windowBackground">@null</item>
