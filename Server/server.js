@@ -55,10 +55,8 @@ function findIndexOf (property, value, array) {
 	return -1;
 }
 
+// Lire les json pour mettre dans les varaibles globales la liste des oeuvres et des annotations existantes
 function init () {
-	//TODO read db.json to update db liste_oeuvres et liste_annotations
-	//fs.readFile('/home/JavaScript/tx_marion/db.json', 'utf8', set);
-	//fs.readFile('db.json', 'utf8', set);
 	fs.readFile('listeAnnotations.json', 'utf8', setAnnotations);
 	fs.readFile('listeOeuvres.json', 'utf8', setOeuvres);
 }
@@ -89,6 +87,7 @@ var setAnnotation = function(val){
 	console.log(liste_annotations);
 };
 
+// Récupérer la liste des annotations d'une oeuvre
 var getComments = function(art){
 	var res = [];
 	for (var i = 0; i < liste_annotations.length; i++) {
@@ -99,7 +98,9 @@ var getComments = function(art){
 	return res;
 }
 
+// Ajouter dans la base de données une annotation
 var addComment = function(data){
+	//TODO check si l'oeuvre existe dans la base
 	liste_annotations.push(data);
 	fs.writeFile("listeAnnotations.json", JSON.stringify(liste_annotations), function(err) {
 	    if(err) {
@@ -117,12 +118,15 @@ var addComment = function(data){
 app.use(cors());
 app.options('*', cors());
 
+
+// Obtenir la liste de toutes les oeuvres présentes dans la base de données
 app.get("/api/oeuvres", function(req, res){
 	console.log("Get oeuvres");
 	res.type("application/json");
 	res.json(liste_oeuvres);
 });
 
+// Obtenir le détail d'une oeuvre particulière
 app.get("/api/oeuvre/:id", function(req, res){
 	res.type("application/json");
 	console.log("Get oeuvre id: "+req.params.id);
@@ -130,6 +134,7 @@ app.get("/api/oeuvre/:id", function(req, res){
 	res.json(resp);
 });
 
+// Obtenir la liste des commentaires d'une oeuvre
 app.get("/api/comments/:artwork", function(req, res){
 	console.log("Get comments artwork: "+ req.params.artwork);
 	res.type("application/json");
@@ -141,6 +146,7 @@ app.use(bodyParser.json());
 
 //ne pas oublier de mettre le content-type - application/json
 
+// Ajouter une annotation à une oeuvre
 app.post("/api/comment", function(req, res){
 	if (!req.body.hasOwnProperty('artwork') || !req.body.hasOwnProperty('comment')){
 		res.statusCode = 400;
