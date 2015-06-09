@@ -1,0 +1,23 @@
+[{
+			"id": "MarkerlessCOS1",
+			"desc": "Ce diptyque est une sérigraphie et à l'acrylique sur toile. Il contient 50 images de l'actrice américaine Marilyn Monroe, toutes basées sur la même photographie publicitaire pour le film Niagara (1953).",
+			"author": "Andy Warhol",
+			"date": "1962",
+			"dim": {
+				"width": 400,
+				"height": 400,
+				"shape": "rectangle"
+			}
+		},
+		{
+			"id": "MarkerlessCOS2",
+			"desc": "Des mannequins nues enduisent leurs corps de peinture et enduisent ensuite des toiles",
+			"author": "Yves Klein",
+			"date": "9 mars 1960",
+			"dim": {
+				"width": 600,
+				"height": 350,
+				"shape": "rectangle"
+			}
+		}]
+		
