@@ -4,7 +4,7 @@ var currentQRCode = null;
 var notTrackingTimer = null;
 
 var comments = [{
-    message: "Test 2",
+    comment: "Test 2",
     date: "Today",
     author: "me"
 }];
@@ -53,7 +53,7 @@ function getComment(com) {
 	//draw text
 	context.fillStyle = "black";
 	context.font = '24pt Helvetica';
-	context.fillText(com.message, 10, 30);
+	context.fillText(com.comment, 10, 30);
 	context.font = '16pt Helvetica';
     context.fillText(com.author, 10, 80);
     context.fillText(com.date, 320, 25);
@@ -64,6 +64,8 @@ function getComment(com) {
 
 function getComments() {
     myComment = [];
+    /*test = getAnnotations("MarkerlessCOS1");
+    console.log("test "+test);*/
     for(var i = 0; i < comments.length; i++){
         if(arel.Scene.objectExists(i)){
             arel.Scene.removeObject(i);
@@ -100,6 +102,8 @@ arel.sceneReady(function()
 	console.log("sceneReady");
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
+	/*art = getArtworks();
+	console.log("Get oeuvres "+art);*/
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
 
 	//acquire texture
@@ -135,7 +139,6 @@ function trackingHandler(type, param)
 			console.log(param[0].getCoordinateSystemName());
 			if(param[0].getCoordinateSystemName() == "MarkerlessCOS2"){
 			    console.log('in');
-
 			}
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
@@ -145,3 +148,47 @@ function trackingHandler(type, param)
 		}
 	}
 };
+
+/**********************
+	CLient
+**********************/
+
+// On récupère la liste des oeuvres d'art
+function getArtworks() {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/oeuvres", false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On récupère le détail d'une oeuvre
+function getDetail(id) {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/oeuvre/"+id, false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On récupère les annotations d'une oeuvre
+function getAnnotations(id) {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/comments/"+id, false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On ajoute une annotation à une oeuvre
+function getAnnotations(data) {
+	var xml = new XMLHttpRequest();
+	xml.open("POST", "http://localhost:4000/api/comment", false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send(data);
+
+	return JSON.parse(xml.responseText);
+}
