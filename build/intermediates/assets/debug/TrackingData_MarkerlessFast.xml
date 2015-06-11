@@ -311,9 +311,6 @@
 						<Z>0</Z>
 					</TranslationOffset>
 
-					<!--	Rotations are specified via unit quaternions, where
-							the imaginary parts "X", "Y", "Z" is specified
-							first, and then the real part "W". -->
 					<RotationOffset>
 						<X>0</X>
 						<Y>0</Y>
@@ -349,7 +346,6 @@
 				track multiple objects in parallel, it will always only track
 				one of the defined objects at the same time.
 				-->
-
 
 	</Connections>
 </TrackingData>

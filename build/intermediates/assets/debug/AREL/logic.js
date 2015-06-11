@@ -24,15 +24,15 @@ function getTexture()
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	//draw text (current time)
-	//context.fillStyle = "white";
-	//context.font = 'bold 24pt Helvetica';
-	//context.fillText("Marilyn Monroe", 10, 50);
-	//context.font = '20pt Helvetica';
-    //context.fillText("Andy Warhol", 10, 80);
-    //context.fillText("1962", 10, 110);
-    //context.fillText("Sérigraphie - acrylique sur toile", 10, 140);
-    //context.fillText("Image provenant du film Niagara", 10, 180);
-	//create image data from the canvas
+	context.fillStyle = "white";
+	context.font = 'bold 24pt Helvetica';
+	context.fillText("Marilyn Monroe", 10, 50);
+	context.font = '20pt Helvetica';
+    context.fillText("Andy Warhol", 10, 80);
+    context.fillText("1962", 10, 110);
+    context.fillText("Sérigraphie - acrylique sur toile", 10, 140);
+    context.fillText("Image provenant du film Niagara", 10, 180);
+	create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
 }
@@ -131,11 +131,12 @@ function trackingHandler(type, param)
 		//if the pattern is found, hide the information to hold your phone over the pattern
 		if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_TRACKING)
 		{
+
 			document.getElementById('info').style.display = "none";
 			console.log(param[0].getCoordinateSystemName());
+			document.getElementById('send').style.display = "none";
 			if(param[0].getCoordinateSystemName() == "MarkerlessCOS2"){
 			    console.log('in');
-
 			}
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
@@ -145,3 +146,47 @@ function trackingHandler(type, param)
 		}
 	}
 };
+
+/**********************
+	CLient
+**********************/
+
+// On récupère la liste des oeuvres d'art
+function getArtworks() {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/oeuvres", false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On récupère le détail d'une oeuvre
+function getDetail(id) {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/oeuvre/"+id, false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On récupère les annotations d'une oeuvre
+function getAnnotations(id) {
+	var xml = new XMLHttpRequest();
+	xml.open("GET", "http://localhost:4000/api/comments/"+id, false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send();
+
+	return JSON.parse(xml.responseText);
+}
+
+//On ajoute une annotation à une oeuvre
+function getAnnotations(data) {
+	var xml = new XMLHttpRequest();
+	xml.open("POST", "http://localhost:4000/api/comment", false);
+	xml.setRequestHeader("Content-type", "application/json");
+	xml.send(data);
+
+	return JSON.parse(xml.responseText);
+}
