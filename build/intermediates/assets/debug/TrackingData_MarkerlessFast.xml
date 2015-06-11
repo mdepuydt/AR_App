@@ -15,6 +15,8 @@
 	<Sensors>
 		<!--	Use the "Fast" variant of the "FeatureBasedSensorSource". The
 				characteristics of this tracker are explained above. -->
+
+
 		<Sensor Type="FeatureBasedSensorSource" Subtype="Fast">
 
 			<!--	Assign an ID to this sensor -->
@@ -94,6 +96,23 @@
 			<!--	Define a "SensorCOS" for this sensor. This is essentially a
 					coordinate system associated with a template image that is
 					to be tracked. -->
+
+			<SensorCOS>
+				<SensorCosID>Patch2</SensorCosID>
+				<Parameters>
+					<ReferenceImage>YvesKlein.jpg</ReferenceImage>
+					<SimilarityThreshold>0.8</SimilarityThreshold>
+				</Parameters>
+			</SensorCOS>
+
+			<SensorCOS>
+				<SensorCosID>Patch3</SensorCosID>
+				<Parameters>
+					<ReferenceImage>RadeauDeLaMeduse.jpg</ReferenceImage>
+					<SimilarityThreshold>0.8</SimilarityThreshold>
+				</Parameters>
+			</SensorCOS>
+
 			<SensorCOS>
 
 				<!--	An ID that this COS is associated with. -->
@@ -129,21 +148,6 @@
 			<!--	The commented lines below show how another COS can be
 					added to the configuration. -->
 
-			<SensorCOS>
-				<SensorCosID>Patch2</SensorCosID>
-				<Parameters>
-					<ReferenceImage>YvesKlein.jpg</ReferenceImage>
-					<SimilarityThreshold>0.8</SimilarityThreshold>
-				</Parameters>
-			</SensorCOS>
-
-            <SensorCOS>
-                <SensorCosID>Patch3</SensorCosID>
-                <Parameters>
-                    <ReferenceImage>RadeauDeLaMeduse.jpg</ReferenceImage>
-                    <SimilarityThreshold>0.8</SimilarityThreshold>
-                </Parameters>
-            </SensorCOS>
 
 		</Sensor>
 	</Sensors>
@@ -160,6 +164,52 @@
 			- A hand-eye calibration can be applied.
 			-->
 	<Connections>
+		<COS>
+			<Name>MarkerlessCOS2</Name>
+			<Fuser Type="BestQualityFuser">
+				<Parameters>
+					<KeepPoseForNumberOfFrames>2</KeepPoseForNumberOfFrames>
+					<GravityAssistance></GravityAssistance>
+					<AlphaTranslation>0.8</AlphaTranslation>
+					<GammaTranslation>0.8</GammaTranslation>
+					<AlphaRotation>0.5</AlphaRotation>
+					<GammaRotation>0.5</GammaRotation>
+					<ContinueLostTrackingWithOrientationSensor>false</ContinueLostTrackingWithOrientationSensor>
+				</Parameters>
+			</Fuser>
+
+			<SensorSource>
+				<SensorID>FeatureTracking1</SensorID>
+				<SensorCosID>Patch2</SensorCosID>
+				<HandEyeCalibration>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</HandEyeCalibration>
+				<COSOffset>
+					<TranslationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+					</TranslationOffset>
+					<RotationOffset>
+						<X>0</X>
+						<Y>0</Y>
+						<Z>0</Z>
+						<W>1</W>
+					</RotationOffset>
+				</COSOffset>
+			</SensorSource>
+		</COS>
+
 		<COS>
 
 			<!--	A descriptive name for this COS. -->
@@ -299,51 +349,7 @@
 				track multiple objects in parallel, it will always only track
 				one of the defined objects at the same time.
 				-->
-		<COS>
-			<Name>MarkerlessCOS2</Name>
-			<Fuser Type="BestQualityFuser">
-				<Parameters>
-					<KeepPoseForNumberOfFrames>2</KeepPoseForNumberOfFrames>
-					<GravityAssistance></GravityAssistance>
-					<AlphaTranslation>0.8</AlphaTranslation>
-					<GammaTranslation>0.8</GammaTranslation>
-					<AlphaRotation>0.5</AlphaRotation>
-					<GammaRotation>0.5</GammaRotation>
-					<ContinueLostTrackingWithOrientationSensor>false</ContinueLostTrackingWithOrientationSensor>
-				</Parameters>
-			</Fuser>
 
-			<SensorSource>
-				<SensorID>FeatureTracking1</SensorID>
-				<SensorCosID>Patch2</SensorCosID>
-				<HandEyeCalibration>
-					<TranslationOffset>
-						<X>0</X>
-						<Y>0</Y>
-						<Z>0</Z>
-					</TranslationOffset>
-					<RotationOffset>
-						<X>0</X>
-						<Y>0</Y>
-						<Z>0</Z>
-						<W>1</W>
-					</RotationOffset>
-				</HandEyeCalibration>
-				<COSOffset>
-					<TranslationOffset>
-						<X>0</X>
-						<Y>0</Y>
-						<Z>0</Z>
-					</TranslationOffset>
-					<RotationOffset>
-						<X>0</X>
-						<Y>0</Y>
-						<Z>0</Z>
-						<W>1</W>
-					</RotationOffset>
-				</COSOffset>
-			</SensorSource>
-		</COS>
 
 	</Connections>
 </TrackingData>
