@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script type="text/javascript" src="arel.js"></script>
-		<script type="text/javascript" src="logic.js"></script>
-		<link rel="stylesheet" type="text/css" href="template.css">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="arel.js"></script>
+	<script type="text/javascript" src="logic.js"></script>
+	<link rel="stylesheet" type="text/css" href="template.css">
 
-		<title>Musei</title>
-	</head>
-	<body>
-		<div id="info">Pointez la caméra vers une oeuvre<br /><br /><img src="../PopArt.jpg" /></div>
-        <div id="edit_message">
-            <input id='message' type="text">
-            <button id="send" onclick="sendMessage()"> Send </button>
-        </div>
-	</body>
+	<title>Musei</title>
+</head>
+<body>
+<div id="scrollable">Commentaires sur l'oeuvre :</div>
+<div id="info">Pointez la caméra vers une oeuvre<br /><br /><img src="../PopArt.jpg" /></div>
+<div id="edit_message">
+	<input id='message' type="text">
+	<button id="send" onclick="sendMessage()"> Send </button>
+</div>
+
+</body>
 </html>

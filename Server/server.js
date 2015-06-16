@@ -46,7 +46,6 @@ init();
 function findIndexOf (property, value, array) {
 
 	for (var i=0; i< array.length; i++){
-		console.log(array[i][property]);
 		if (array[i][property] == value){
 			return i;
 		}
@@ -79,12 +78,10 @@ function setOeuvres (err, data) {
 
 var setOeuvre = function(val){
 	liste_oeuvres.push(val);
-	console.log(liste_oeuvres);
 };
 
 var setAnnotation = function(val){
 	liste_annotations.push(val);
-	console.log(liste_annotations);
 };
 
 // Récupérer la liste des annotations d'une oeuvre
