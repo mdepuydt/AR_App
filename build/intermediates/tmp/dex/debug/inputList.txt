@@ -1,6 +1,0 @@
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/classes/debug
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-2d3c41770a4f62d4c94f442360fe9d726ae3cb97.jar
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-0e20eda110765fa40d6102a15156d24e5e826c8b.jar
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-d87cc00676aba6eef9233fc18bc876198ef93755.jar
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/metaiosdk-f77e175a8f093dc1a75257ef3287866db5790f73.jar
-/Users/marionDepuydt/Documents/repo/AR_App/AR_App/build/intermediates/pre-dexed/debug/classes-9a1b957eb305414c611881bb5c4c5835e8949eea.jar

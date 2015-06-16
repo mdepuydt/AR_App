@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#FF0654A5"
-    android:orientation="horizontal" >
-</FrameLayout>
-
-<!-- From: file:/Users/marionDepuydt/Documents/repo/AR_App/AR_App/res/layout/main.xml -->
