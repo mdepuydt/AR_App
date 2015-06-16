@@ -2,7 +2,7 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "172.20.10.2";
+var addr = "192.168.1.47";
 var lastMarker = null;
 var comments = [{
     comment: "Test 2",
@@ -10,14 +10,14 @@ var comments = [{
     author: "me"
 }];
 
-var imageData = modifyComments("MarkerlessCOS1");
+//var imageData = modifyComments("MarkerlessCOS1");
 
 function getTexture() {
 
 	//create an HTML5 Canvas
 	canvas = document.createElement("canvas");
-	//canvas.width = getDetail(Patch1).dim.width;
-	//canvas.height = getDetail(Patch1).dim.height;
+	canvas.width = getDetail(Patch1).dim.width;
+	canvas.height = getDetail(Patch1).dim.height;
 
 	//get a 2D context
 	var context = canvas.getContext('2d');
@@ -25,7 +25,7 @@ function getTexture() {
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 255, 0.4)";
 	context.fillRect(0, 0, 250, 250);
-	//context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	//draw text (current time)
 	context.fillStyle = "white";
@@ -33,7 +33,7 @@ function getTexture() {
 	context.fillText("Marilyn Monroe", 10, 50);
 	context.font = '20pt Helvetica';
     //context.fillText(getDetail(Patch1).author, 10, 80);
-    //context.fillText(getDetail(Patch1).author, 10, 110);
+    //context.fillText(getDetail(Patch1).date , 10, 110);
     //context.fillText(getDetail(Patch1).desc, 10, 110);
     context.fillText("Sérigraphie - acrylique sur toile", 10, 140);
     context.fillText("Image provenant du film Niagara", 10, 180);
