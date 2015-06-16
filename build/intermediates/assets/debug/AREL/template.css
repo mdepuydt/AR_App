@@ -56,10 +56,10 @@ button {
 }
 
 #scrollable {
-    padding-right: 1px;
+	opacity: 0.6;
     width: 150px;
     height: 200px;
     overflow: scroll;
-    color: blue;
+    background-color: blue;
     overflow-x: hidden;
 }
