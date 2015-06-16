@@ -4,35 +4,37 @@ var currentQRCode = null;
 var notTrackingTimer = null;
 
 var comments = [{
-    message: "Test 2",
+    comment: "Test 2",
     date: "Today",
     author: "me"
 }];
 
-function getTexture()
-{
+function getTexture() {
+
 	//create an HTML5 Canvas
 	canvas = document.createElement("canvas");
-	canvas.width = 512;
-	canvas.height = 512;
+	//canvas.width = getDetail(Patch1).dim.width;
+	//canvas.height = getDetail(Patch1).dim.height;
 
 	//get a 2D context
 	var context = canvas.getContext('2d');
 
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 255, 0.4)";
-	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.fillRect(0, 0, 250, 250);
+	//context.fillRect(0, 0, canvas.width, canvas.height);
 
 	//draw text (current time)
 	context.fillStyle = "white";
 	context.font = 'bold 24pt Helvetica';
 	context.fillText("Marilyn Monroe", 10, 50);
 	context.font = '20pt Helvetica';
-    context.fillText("Andy Warhol", 10, 80);
-    context.fillText("1962", 10, 110);
+    //context.fillText(getDetail(Patch1).author, 10, 80);
+    //context.fillText(getDetail(Patch1).author, 10, 110);
+    //context.fillText(getDetail(Patch1).desc, 10, 110);
     context.fillText("Sérigraphie - acrylique sur toile", 10, 140);
     context.fillText("Image provenant du film Niagara", 10, 180);
-	create image data from the canvas
+	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
 }
@@ -58,21 +60,26 @@ function getComment(com) {
     context.fillText(com.author, 10, 80);
     context.fillText(com.date, 320, 25);
 	//create image data from the canvas
-	var newImageData = canvas.toDataURL();
-	return new arel.Image(newImageData);
+	//var newImageData = canvas.toDataURL();
+	//return new arel.Image(newImageData);
+	return com.message;
 }
 
 function getComments() {
     myComment = [];
+    /*test = getAnnotations("MarkerlessCOS2");
+    console.log("test "+test);*/
     for(var i = 0; i < comments.length; i++){
         if(arel.Scene.objectExists(i)){
             arel.Scene.removeObject(i);
         }
-        console.log(comments[i]);
         var new_comment = getComment(comments[i]);
-        myComment[i] = new arel.Object.Model3D.createFromArelImage(i, new_comment);
-        myComment[i].setTranslation(new arel.Vector3D(470.0, 200.0-i*120, 4.0));
-        arel.Scene.addObject(myComment[i]);
+
+        document.getElementById("scrollable").innerHTML = new_comment;
+        //Ajouter la div directement en objet 3D. Traiter le reste en HTML et recharger
+    	//myComment[i] = new arel.Object.Model3D.createFromArelImage(i, new_comment);
+        //myComment[i].setTranslation(new arel.Vector3D(470.0, 200.0-i*120, 4.0));
+        //arel.Scene.addObject(myComment[i]);
     }
 }
 
@@ -97,9 +104,11 @@ var myObject;
 
 arel.sceneReady(function()
 {
-	console.log("sceneReady = Texture");
+	console.log("sceneReady");
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
+	/*art = getArtworks();
+	console.log("Get oeuvres "+art);*/
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
 
 	//acquire texture
@@ -108,7 +117,7 @@ arel.sceneReady(function()
 
     //create 3D model from image
     myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
-    //myComment = new arel.Object.Model3D.createFromArelImage("myComment", comment);
+    myComment = new arel.Object.Model3D.createFromArelImage("myComment", comment);
     //scale 3D model
     myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     //myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
@@ -131,10 +140,9 @@ function trackingHandler(type, param)
 		//if the pattern is found, hide the information to hold your phone over the pattern
 		if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_TRACKING)
 		{
-
 			document.getElementById('info').style.display = "none";
+			document.getElementById('scrollable').style.display = "block";
 			console.log(param[0].getCoordinateSystemName());
-			document.getElementById('send').style.display = "none";
 			if(param[0].getCoordinateSystemName() == "MarkerlessCOS2"){
 			    console.log('in');
 			}
@@ -143,6 +151,7 @@ function trackingHandler(type, param)
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)
 		{
 			document.getElementById('info').style.display = "block";
+			document.getElementById('scrollable').style.display = "none";
 		}
 	}
 };

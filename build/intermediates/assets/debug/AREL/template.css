@@ -52,4 +52,14 @@ button {
     width: 20%;
     height: 50px;
     padding-left: 1px;
+    padding-right: 1px;
+}
+
+#scrollable {
+    padding-right: 1px;
+    width: 150px;
+    height: 200px;
+    overflow: scroll;
+    color: blue;
+    overflow-x: hidden;
 }
