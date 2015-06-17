@@ -2,7 +2,7 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.1.47";
+var addr = "192.168.43.32";
 var lastMarker = null;
 var comments = [{
     comment: "Test 2",
@@ -134,6 +134,19 @@ function sendMessage() {
     getComments();
 }
 
+function setPosition() {
+	var elementStyle = document.getElementById("edit_message").style;
+    elementStyle.position = "absolute";
+    elementStyle.top = "280px";
+}
+
+function resetPosition() {
+	var elementStyle = document.getElementById("edit_message").style;
+	if (    elementStyle.top == "280px") {
+        elementStyle.position = "absolute";
+        elementStyle.bottom = "10px";
+	}
+}
 
 var myObject;
 
@@ -156,7 +169,7 @@ arel.sceneReady(function()
     //myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
     arel.Scene.addObject(myObject);
     //arel.Scene.addObject(myComment);
-
+	resetPosition();
     getComments();
 
 

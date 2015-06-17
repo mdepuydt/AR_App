@@ -33,33 +33,36 @@ html, body {
 }
 
 #edit_message {
-    position: absolute;
-    bottom: 0.3cm;
+	position: absolute;
+	bottom: 10px;
     height: 50px;
     width: 100%;
+    border-radius: 15px;
 }
 
 input {
-    position: inline-block;
-    float: left;
-    width: 75%;
+    width: 70%;
     height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
 }
 
 button {
-    position: inline-block;
-    float: right;
     width: 20%;
     height: 50px;
-    padding-left: 1px;
-    padding-right: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+
 }
 
 #scrollable {
-	opacity: 0.6;
+	opacity: 0.5;
     width: 150px;
     height: 200px;
     overflow: scroll;
-    background-color: blue;
+    background-color: grey;
     overflow-x: hidden;
+    border-radius: 15px;
 }
