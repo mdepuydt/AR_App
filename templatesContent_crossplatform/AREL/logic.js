@@ -2,7 +2,7 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.43.32";
+var addr = "192.168.0.11";
 var lastMarker = null;
 var comments = [{
     comment: "Test 2",
@@ -10,7 +10,7 @@ var comments = [{
     author: "me"
 }];
 
-//var imageData = modifyComments("MarkerlessCOS1");
+var imageData = modifyComments("MarkerlessCOS1");
 
 function getTexture() {
 
@@ -58,13 +58,17 @@ function modifyComments(id){
 	for(var i = 0; i < comments.length; i++){
 		console.log(comments[i].comment);
 		context.fillText(comments[i].comment, 10, 30+(50*(i+1)));
+		console.log(document.getElementById("scrollable").innerHTML);
+		document.getElementById('scrollable').innerHTML += comment[i].comment;
+		document.getElementById('scrollable').innerHTML += "<br>";
 	}
+
 	//create image data from the canvas
    	var newImageData = canvas.toDataURL();
    	myComment = new arel.Object.Model3D.createFromArelImage("commentaire", arel.Image(newImageData));
    	//myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-    arel.Scene.addObject(myComment);
+    arel.Scene.setObjects(myComment);
     return canvas.toDataURL();
    	//return new arel.Image(newImageData);
 
@@ -105,7 +109,7 @@ function getComments() {
             arel.Scene.removeObject(i);
         }*/
     for(var i = 0; i < comments.length; i++){
-    	document.getElementById("scrollable").innerHTML += comments[i].comment+"\n";
+    	document.getElementById("scrollable").innerHTML += comments[i].comment+"<br>";
     }
 		div = document.getElementById("scrollable");
 		var myComment = new arel.Object.Model3D.createFromArelImage("commentaire", div);
@@ -137,15 +141,13 @@ function sendMessage() {
 function setPosition() {
 	var elementStyle = document.getElementById("edit_message").style;
     elementStyle.position = "absolute";
-    elementStyle.top = "280px";
+    elementStyle.bottom = "305px";
 }
 
 function resetPosition() {
 	var elementStyle = document.getElementById("edit_message").style;
-	if (    elementStyle.top == "280px") {
-        elementStyle.position = "absolute";
-        elementStyle.bottom = "10px";
-	}
+    elementStyle.position = "absolute";
+    elementStyle.bottom = "10px";
 }
 
 var myObject;
@@ -169,7 +171,6 @@ arel.sceneReady(function()
     //myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
     arel.Scene.addObject(myObject);
     //arel.Scene.addObject(myComment);
-	resetPosition();
     getComments();
 
 

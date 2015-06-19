@@ -9,11 +9,11 @@
 
 	<title>Musei</title>
 </head>
-<body onclick="resetPosition()">
+<body>
 <div id="scrollable">  Commentaires sur l'oeuvre :</div>
 <div id="info">Pointez la caméra vers une oeuvre<br /><br /><img src="../PopArt.jpg" /></div>
-<div id="edit_message">
-	<input id='message' type="text" onclick="setPosition()">
+<div id="edit_message" >
+	<input id='message' type="text" onblur="resetPosition()" onfocus="setPosition()">
 	<button id="send" onclick="sendMessage()"> Send </button>
 </div>
 </body>
