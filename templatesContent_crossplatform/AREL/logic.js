@@ -65,7 +65,7 @@ function modifyComments(id){
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = "black";
     context.font = '24pt Helvetica';
-    context.fillText("Commentaire sur l'oeuvre:", 10, 30);
+    context.fillText("Comments:", 10, 30);
 	// put all the comments in it but only 4 are visible
 	var div = document.getElementById("scrollable");
 	div.innerHTML = "Commentaire sur l'oeuvre:<br>";
@@ -82,9 +82,9 @@ function modifyComments(id){
 	//create image data from the canvas
    	var newImageData = canvas.toDataURL();
    	myComment = new arel.Object.Model3D.createFromArelImage("commentaire", arel.Image(newImageData));
-   	//myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
+   	myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-    arel.Scene.setObjects(myComment);
+    arel.Scene.addObject(myComment);
     return canvas.toDataURL();
    	//return new arel.Image(newImageData);
 
@@ -139,16 +139,17 @@ function getComments() {
 
 
 function sendMessage() {
+	//TODO ne fonctionne pas quand bouton en haut 
     var comment = {};
     comment.comment = document.getElementById('message').value;
+    document.getElementById('message').value = "";
     var today = new Date();
-    //TODO ajouter le bon nom de marqueur
-	comment.artwork = "MarkerlessCOS1";
+	comment.artwork = lastMarker;
     comment.date = today.getDate() + '/' + today.getMonth();
     comment.author = 'me';
     comments.push(comment);
 	addAnnotation(JSON.stringify(comment));
-    getComments();
+    modifyComments(lastMarker);
 }
 
 function setPosition() {
