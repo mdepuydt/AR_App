@@ -10,7 +10,19 @@ var comments = [{
     author: "me"
 }];
 
-var imageData = modifyComments("MarkerlessCOS1");
+var imageData = initImageData();
+
+function initImageData() {
+	canvas = document.createElement("canvas");
+    canvas.width = 400;
+    canvas.height = 450;
+    var context = canvas.getContext('2d');
+    context.fillStyle = "rgba(0, 0, 0, 0.4)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "black";
+    context.font = '24pt Helvetica';
+    context.fillText("Loading commentaires...", 10, 30);
+}
 
 function getTexture() {
 
@@ -55,12 +67,16 @@ function modifyComments(id){
     context.font = '24pt Helvetica';
     context.fillText("Commentaire sur l'oeuvre:", 10, 30);
 	// put all the comments in it but only 4 are visible
+	var div = document.getElementById("scrollable");
+	div.innerHTML = "Commentaire sur l'oeuvre:<br>";
 	for(var i = 0; i < comments.length; i++){
 		console.log(comments[i].comment);
 		context.fillText(comments[i].comment, 10, 30+(50*(i+1)));
-		console.log(document.getElementById("scrollable").innerHTML);
-		document.getElementById('scrollable').innerHTML += comment[i].comment;
-		document.getElementById('scrollable').innerHTML += "<br>";
+		console.log(document.getElementById("edit_message").innerHTML);
+		console.log(div.innerHTML);
+
+		div.innerHTML += comments[i].comment;
+		div.innerHTML += "<br>";
 	}
 
 	//create image data from the canvas
@@ -79,14 +95,11 @@ function getComment(com) {
 	canvas = document.createElement("canvas");
 	canvas.width = 400;
 	canvas.height = 100;
-
 	//get a 2D context
 	var context = canvas.getContext('2d');
-
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 0, 0.4)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
-
 	//draw text
 	context.fillStyle = "black";
 	context.font = '24pt Helvetica';
