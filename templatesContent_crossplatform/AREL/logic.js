@@ -2,7 +2,7 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.0.11";
+var addr = "192.168.43.32";
 var lastMarker = null;
 var comments = [{
     comment: "Test 2",
@@ -21,7 +21,7 @@ function initImageData() {
     context.fillRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = "black";
     context.font = '24pt Helvetica';
-    context.fillText("Loading commentaires...", 10, 30);
+    context.fillText("Loading comments...", 10, 30);
 }
 
 function getTexture() {
@@ -77,6 +77,10 @@ function modifyComments(id){
 
 		div.innerHTML += comments[i].comment;
 		div.innerHTML += "<br>";
+		div.innerHTML += "------";
+		div.innerHTML += "<br>";
+
+
 	}
 
 	//create image data from the canvas
@@ -85,8 +89,8 @@ function modifyComments(id){
    	myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
     arel.Scene.addObject(myComment);
-    return canvas.toDataURL();
-   	//return new arel.Image(newImageData);
+    //return canvas.toDataURL();
+   	return new arel.Image(newImageData);
 
 }
 
@@ -108,31 +112,20 @@ function getComment(com) {
     context.fillText(com.author, 10, 80);
     context.fillText(com.date, 320, 25);
 	//create image data from the canvas
-	//var newImageData = canvas.toDataURL();
-	//return new arel.Image(newImageData);
-	return com.comment;
+	var newImageData = canvas.toDataURL();
+	return new arel.Image(newImageData);
+	//return com.comment;
 }
 
 function getComments() {
     comments = JSON.parse(getAnnotations(lastMarker));
     console.log("test "+ comments);
     document.getElementById("scrollable").innerHTML = "Commentaires sur l'oeuvre :";
-    /*for(var i = 0; i < comments.length; i++){
-        if(arel.Scene.objectExists(i)){
-            arel.Scene.removeObject(i);
-        }*/
-    for(var i = 0; i < comments.length; i++){
-    	document.getElementById("scrollable").innerHTML += comments[i].comment+"<br>";
-    }
-		div = document.getElementById("scrollable");
-		var myComment = new arel.Object.Model3D.createFromArelImage("commentaire", div);
-		myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-		myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-		arel.Scene.addObject(myComment);
-        //Ajouter la div directement en objet 3D. Traiter le reste en HTML et recharger
-    	//myComment[i] = new arel.Object.Model3D.createFromArelImage(i, new_comment);
-        //myComment[i].setTranslation(new arel.Vector3D(470.0, 200.0-i*120, 4.0));
-        //arel.Scene.addObject(myComment[i]);
+	div = document.getElementById("scrollable");
+	var myComment = new arel.Object.Model3D.createFromArelImage("commentaire", div);
+	myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
+	myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
+	arel.Scene.addObject(myComment);
 
 }
 
