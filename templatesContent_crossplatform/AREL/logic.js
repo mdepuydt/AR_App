@@ -2,56 +2,77 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.43.32";
+var addr = "192.168.0.11";
 var lastMarker = null;
-var comments = [{
-    comment: "Test 2",
-    date: "Today",
-    author: "me"
-}];
 
-var imageData = initImageData();
-
-function initImageData() {
-	canvas = document.createElement("canvas");
-    canvas.width = 400;
-    canvas.height = 450;
-    var context = canvas.getContext('2d');
-    context.fillStyle = "rgba(0, 0, 0, 0.4)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "black";
-    context.font = '24pt Helvetica';
-    context.fillText("Loading comments...", 10, 30);
-}
-
-function getTexture() {
-
+function getTextureDetail(id) {
+	detail = getDetail(id);
 	//create an HTML5 Canvas
 	canvas = document.createElement("canvas");
-	canvas.width = getDetail(Patch1).dim.width;
-	canvas.height = getDetail(Patch1).dim.height;
-
+	canvas.width = detail.dim.width;
+	canvas.height = detail.dim.height;
 	//get a 2D context
 	var context = canvas.getContext('2d');
-
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 255, 0.4)";
-	context.fillRect(0, 0, 250, 250);
 	context.fillRect(0, 0, canvas.width, canvas.height);
+	//context.fillRect(0, 0, canvas.width, canvas.height);
 
 	//draw text (current time)
 	context.fillStyle = "white";
 	context.font = 'bold 24pt Helvetica';
-	context.fillText("Marilyn Monroe", 10, 50);
+	context.fillText(id, 10, 50);
 	context.font = '20pt Helvetica';
-    //context.fillText(getDetail(Patch1).author, 10, 80);
-    //context.fillText(getDetail(Patch1).date , 10, 110);
-    //context.fillText(getDetail(Patch1).desc, 10, 110);
-    context.fillText("Sérigraphie - acrylique sur toile", 10, 140);
-    context.fillText("Image provenant du film Niagara", 10, 180);
+    context.fillText(detail.desc, 10, 110);
+    context.fillText(detail.author, 10, 140);
+    context.fillText(detail.date, 10, 180);
 	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
+}
+
+function getScrollableDiv(){
+   	//create an HTML5 Div
+   	canvas = document.createElement("canvas");
+   	canvas.width = "100";
+   	canvas.height = "50";
+   	canvas.style.overflow = "scroll";
+    //get a 2D context
+    var context = canvas.getContext('2d');
+    //draw transparent background
+    context.fillStyle = "rgba(0, 0, 0, 0.4)";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    //draw text (current time)
+    context.fillStyle = "white";
+    context.font = 'bold 24pt Helvetica';
+    context.fillText("Test", 10, 10);
+    context.fillText("Test 2", 10, 55);
+    context.font = '10pt Helvetica';
+    //create image data from the canvas
+    var newImageData = canvas.toDataURL();
+    return new arel.Image(newImageData);
+}
+
+function add3DComments(com){
+
+	if(myComment){
+		for(var i=0; i < myComment.length; i++){
+			console.log("remove");
+			arel.Scene.removeObject(i);
+		}
+	}
+	var myComment = [];
+	for(var i=0; i < com.length; i++){
+		var comment = getComment(com[i]);
+		myComment[i] = new arel.Object.Model3D.createFromArelImage(i, comment);
+        //myComment[i].setTranslation(arel.Vector3D.add(myComment.getTranslation(), new arel.Vector3D(100, 0-(i*100), 0)));
+        myComment[i].setTranslation(new arel.Vector3D(400.0, 200.0-(i+1.0)*110.0, 1.0));
+        arel.Scene.addObject(myComment[i]);
+	}
+	if(com.length > 4){
+		//TODO créer flèche pour descendre
+	}
 }
 
 function modifyComments(id){
@@ -69,12 +90,9 @@ function modifyComments(id){
 	// put all the comments in it but only 4 are visible
 	var div = document.getElementById("scrollable");
 	div.innerHTML = "Commentaire sur l'oeuvre:<br>";
+	add3DComments(comments);
 	for(var i = 0; i < comments.length; i++){
-		console.log(comments[i].comment);
 		context.fillText(comments[i].comment, 10, 30+(50*(i+1)));
-		console.log(document.getElementById("edit_message").innerHTML);
-		console.log(div.innerHTML);
-
 		div.innerHTML += comments[i].comment;
 		div.innerHTML += "<br>";
 		div.innerHTML += "------";
@@ -82,23 +100,30 @@ function modifyComments(id){
 
 
 	}
-
+	//var newComment = div;
+   	//scroll = new arel.Image(newComment);
+   	var scroll = getScrollableDiv();
+   	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
+    myScroll.setScale(new arel.Vector3D(2.0, 2.0, 2.0));
+    myScroll.setTranslation(new arel.Vector3D(400.0, 500.0, 1.0));
+    arel.Scene.addObject(myScroll);
 	//create image data from the canvas
-   	var newImageData = canvas.toDataURL();
-   	myComment = new arel.Object.Model3D.createFromArelImage("commentaire", arel.Image(newImageData));
-   	myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-    myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-    arel.Scene.addObject(myComment);
-    //return canvas.toDataURL();
-   	return new arel.Image(newImageData);
+	if(myObject){
+		arel.Scene.removeObject(myObject);
+	}
+   	var image = getTextureDetail(id);
+    myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
+    myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
+    arel.Scene.addObject(myObject);
+
 
 }
 
 function getComment(com) {
     //create an HTML5 Canvas
 	canvas = document.createElement("canvas");
-	canvas.width = 400;
-	canvas.height = 100;
+	canvas.width = 100;
+	canvas.height = 50;
 	//get a 2D context
 	var context = canvas.getContext('2d');
 	//draw transparent background
@@ -116,20 +141,6 @@ function getComment(com) {
 	return new arel.Image(newImageData);
 	//return com.comment;
 }
-
-function getComments() {
-    comments = JSON.parse(getAnnotations(lastMarker));
-    console.log("test "+ comments);
-    document.getElementById("scrollable").innerHTML = "Commentaires sur l'oeuvre :";
-	div = document.getElementById("scrollable");
-	var myComment = new arel.Object.Model3D.createFromArelImage("commentaire", div);
-	myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-	myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-	arel.Scene.addObject(myComment);
-
-}
-
-
 
 function sendMessage() {
 	//TODO ne fonctionne pas quand bouton en haut 
@@ -159,7 +170,7 @@ function resetPosition() {
 
 var myObject;
 
-arel.sceneReady(function()
+arel.ready(function()
 {
 	console.log("sceneReady");
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
@@ -168,19 +179,17 @@ arel.sceneReady(function()
 	//acquire texture
     //var image = getTexture();
     //var comment = getComment('Test 1');
-	var image = new arel.Image(imageData);
+	//var image = new arel.Image(imageData);
     //create 3D model from image
-    myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
+    //myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
     //myComment = new arel.Object.Model3D.createFromArelImage("myComment", comment);
     //scale 3D model
-    myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
+    //myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     //myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
     //myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-    arel.Scene.addObject(myObject);
+    //arel.Scene.addObject(myObject);
     //arel.Scene.addObject(myComment);
-    getComments();
-
-
+    //getComments();
 });
 
 function trackingHandler(type, param)
@@ -197,6 +206,12 @@ function trackingHandler(type, param)
 			console.log(param[0].getCoordinateSystemName());
 			lastMarker = param[0].getCoordinateSystemName();
 			modifyComments(param[0].getCoordinateSystemName());
+			if(arel.Events.GestureHandler.TRANSLATING_START){
+				console.log("true");
+			}
+			if(arel.Events.Object.ONTOUCHSTARTED){
+				console.log("true object");
+			}
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)

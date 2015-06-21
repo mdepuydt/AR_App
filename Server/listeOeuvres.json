@@ -1,5 +1,6 @@
 [{
 			"id": "MarkerlessCOS1",
+			"title": "Marilyn Monroe",
 			"desc": "Ce diptyque est une sérigraphie et à l'acrylique sur toile. Il contient 50 images de l'actrice américaine Marilyn Monroe, toutes basées sur la même photographie publicitaire pour le film Niagara (1953).",
 			"author": "Andy Warhol",
 			"date": "1962",
@@ -11,11 +12,24 @@
 		},
 		{
 			"id": "MarkerlessCOS2",
+			"title": "Femmes nues",
 			"desc": "Des mannequins nues enduisent leurs corps de peinture et enduisent ensuite des toiles",
 			"author": "Yves Klein",
 			"date": "9 mars 1960",
 			"dim": {
 				"width": 600,
+				"height": 350,
+				"shape": "rectangle"
+			}
+		},
+		{
+			"id": "MarkerlessCOS3",
+			"title": "Le radeau de la Méduse",
+			"desc": "Une célèbre toile",
+			"author": "Théodore Géricault",
+			"date": "1819",
+			"dim": {
+				"width": 550,
 				"height": 350,
 				"shape": "rectangle"
 			}
