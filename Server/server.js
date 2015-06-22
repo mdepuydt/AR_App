@@ -15,6 +15,7 @@ var bodyParser = require('body-parser');
 /*****************************************************************
 liste_oeuvres contient la liste des oeuvres du musée avec pour chaque artwork:
 	-id: marker utilisé par l'application pour tracker l'oeuvre
+	-title: titre de l'oeuvre
 	-desc: description de l'oeuvre
 	-author: auteur de l'oeuvre
 	-date: date de réalisation de l'oeuvre
@@ -27,10 +28,9 @@ var liste_oeuvres = [];
 
 /*****************************************************************
 liste_annotations contient la liste des annotations du musée avec pour chaque annotation:
-	-id: identifiant unique de l'annotation
 	-artwork: id de l'oeuvre concernée
 	-author: auteur de l'annotation
-	-date: date d'neregistrement de l'annotation
+	-date: date d'enregistrement de l'annotation
 	-comment: texte de l'annotation
 ******************************************************************/
 

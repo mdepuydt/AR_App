@@ -3,10 +3,10 @@ var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
 var addr = "192.168.0.11";
-var lastMarker = null;
+var lastMarkerId = null;
+var obj = [];
 
-function getTextureDetail(id) {
-	detail = getDetail(id);
+function getTextureDetail(detail) {
 	//create an HTML5 Canvas
 	canvas = document.createElement("canvas");
 	canvas.width = detail.dim.width;
@@ -21,7 +21,7 @@ function getTextureDetail(id) {
 	//draw text (current time)
 	context.fillStyle = "white";
 	context.font = 'bold 24pt Helvetica';
-	context.fillText(id, 10, 50);
+	context.fillText(detail.title, 10, 50);
 	context.font = '20pt Helvetica';
     context.fillText(detail.desc, 10, 110);
     context.fillText(detail.author, 10, 140);
@@ -31,11 +31,11 @@ function getTextureDetail(id) {
 	return new arel.Image(newImageData);
 }
 
-function getScrollableDiv(){
+function getScrollableDiv(detail, comments){
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
-   	canvas.width = "100";
-   	canvas.height = "50";
+   	canvas.width = detail.dim.width;
+   	canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
     //get a 2D context
     var context = canvas.getContext('2d');
@@ -46,9 +46,10 @@ function getScrollableDiv(){
     //draw text (current time)
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
-    context.fillText("Test", 10, 10);
-    context.fillText("Test 2", 10, 55);
-    context.font = '10pt Helvetica';
+    //TODO vérifier que le commentaire rentre bien en longueur
+    for(var i=0; i < comments.length; i++){
+    	context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
+    }
     //create image data from the canvas
     var newImageData = canvas.toDataURL();
     return new arel.Image(newImageData);
@@ -68,6 +69,7 @@ function add3DComments(com){
 		myComment[i] = new arel.Object.Model3D.createFromArelImage(i, comment);
         //myComment[i].setTranslation(arel.Vector3D.add(myComment.getTranslation(), new arel.Vector3D(100, 0-(i*100), 0)));
         myComment[i].setTranslation(new arel.Vector3D(400.0, 200.0-(i+1.0)*110.0, 1.0));
+        myComment[i].setCoordinateSystemID(com[i].artwork);
         arel.Scene.addObject(myComment[i]);
 	}
 	if(com.length > 4){
@@ -77,20 +79,12 @@ function add3DComments(com){
 
 function modifyComments(id){
 	comments = getAnnotations(id);
-	//create canvas scrollable
-	canvas = document.createElement("canvas");
-    canvas.width = 400;
-    canvas.height = 450;
-    var context = canvas.getContext('2d');
-    context.fillStyle = "rgba(0, 0, 0, 0.4)";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = "black";
-    context.font = '24pt Helvetica';
-    context.fillText("Comments:", 10, 30);
 	// put all the comments in it but only 4 are visible
+
+	//HTML5 élément des commentaires
+	/*
 	var div = document.getElementById("scrollable");
 	div.innerHTML = "Commentaire sur l'oeuvre:<br>";
-	add3DComments(comments);
 	for(var i = 0; i < comments.length; i++){
 		context.fillText(comments[i].comment, 10, 30+(50*(i+1)));
 		div.innerHTML += comments[i].comment;
@@ -99,23 +93,27 @@ function modifyComments(id){
 		div.innerHTML += "<br>";
 
 
-	}
-	//var newComment = div;
-   	//scroll = new arel.Image(newComment);
-   	var scroll = getScrollableDiv();
-   	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
-    myScroll.setScale(new arel.Vector3D(2.0, 2.0, 2.0));
-    myScroll.setTranslation(new arel.Vector3D(400.0, 500.0, 1.0));
-    arel.Scene.addObject(myScroll);
+	}*/
+	// affichage de chaque commentaire dans un object différent
+	//add3DComments(comments);
 	//create image data from the canvas
-	if(myObject){
-		arel.Scene.removeObject(myObject);
-	}
-   	var image = getTextureDetail(id);
+
+	// ajouter en AR les détails sur le tableau
+	var detail = getDetail(id);
+    var image = getTextureDetail(detail);
     myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
     myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-    arel.Scene.addObject(myObject);
+    myObject.setCoordinateSystemID(id);
+    obj.push(myObject);
 
+	// affichage des commentaires en AR
+   	var scroll = getScrollableDiv(detail, comments);
+   	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
+    myScroll.setScale(myObject.getScale());
+    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+5.0, 0.0, 1.0));
+    myScroll.setCoordinateSystemID(id);
+    obj.push(myScroll);
+    arel.Scene.setObjects(obj);
 
 }
 
@@ -148,12 +146,13 @@ function sendMessage() {
     comment.comment = document.getElementById('message').value;
     document.getElementById('message').value = "";
     var today = new Date();
-	comment.artwork = lastMarker;
-    comment.date = today.getDate() + '/' + today.getMonth();
+	comment.artwork = lastMarkerId;
+    //comment.date = today.getDate() + '/' + today.getMonth();
+    comment.date = today;
     comment.author = 'me';
     comments.push(comment);
 	addAnnotation(JSON.stringify(comment));
-    modifyComments(lastMarker);
+    modifyComments(lastMarkerId);
 }
 
 function setPosition() {
@@ -176,20 +175,6 @@ arel.ready(function()
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
-	//acquire texture
-    //var image = getTexture();
-    //var comment = getComment('Test 1');
-	//var image = new arel.Image(imageData);
-    //create 3D model from image
-    //myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
-    //myComment = new arel.Object.Model3D.createFromArelImage("myComment", comment);
-    //scale 3D model
-    //myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-    //myComment.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
-    //myComment.setTranslation(new arel.Vector3D(470.0, 200.0, 4.0));
-    //arel.Scene.addObject(myObject);
-    //arel.Scene.addObject(myComment);
-    //getComments();
 });
 
 function trackingHandler(type, param)
@@ -203,21 +188,16 @@ function trackingHandler(type, param)
 			document.getElementById('info').style.display = "none";
 			document.getElementById('scrollable').style.display = "block";
 			document.getElementById('edit_message').style.display = "block";
-			console.log(param[0].getCoordinateSystemName());
-			lastMarker = param[0].getCoordinateSystemName();
-			modifyComments(param[0].getCoordinateSystemName());
-			if(arel.Events.GestureHandler.TRANSLATING_START){
-				console.log("true");
-			}
-			if(arel.Events.Object.ONTOUCHSTARTED){
-				console.log("true object");
-			}
+			lastMarkerId = param[0].getCoordinateSystemID();
+			//TODO prendre gestureHandler pour afficher les commentaires suivants quand on clique sur les commentaires
+			modifyComments(lastMarkerId);
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)
 		{
 			document.getElementById('info').style.display = "block";
 			document.getElementById('scrollable').style.display = "none";
+			//TODO idée: laisser afficher si le lastMarker different de null si difficile d'écrire quand on reste focus sur l'image?
 			document.getElementById('edit_message').style.display = "none";
 		}
 	}

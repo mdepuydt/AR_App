@@ -113,7 +113,7 @@
 							image.
 							These parameters are not required and are intended
 							for expert use only. -->
-					<ReferenceImage>PopArt.jpg</ReferenceImage>
+					<ReferenceImage WidthMM="470" HeightMM="469">PopArt.jpg</ReferenceImage>
 					<!-- <ReferenceImage WidthMM="100" HeightMM="100">metaioman_target.png</ReferenceImage> -->
 
 					<!--	Another similarity threshold can be specified here.
@@ -132,7 +132,7 @@
 			<SensorCOS>
 				<SensorCosID>Patch2</SensorCosID>
 				<Parameters>
-					<ReferenceImage>YvesKlein.jpg</ReferenceImage>
+					<ReferenceImage WidthMM="600" HeightMM="331">YvesKlein.jpg</ReferenceImage>
 					<SimilarityThreshold>0.8</SimilarityThreshold>
 				</Parameters>
 			</SensorCOS>
@@ -140,7 +140,7 @@
             <SensorCOS>
                 <SensorCosID>Patch3</SensorCosID>
                 <Parameters>
-                    <ReferenceImage>RadeauDeLaMeduse.jpg</ReferenceImage>
+                    <ReferenceImage WidthMM="650" HeightMM="440">RadeauDeLaMeduse.jpg</ReferenceImage>
                     <SimilarityThreshold>0.8</SimilarityThreshold>
                 </Parameters>
             </SensorCOS>
