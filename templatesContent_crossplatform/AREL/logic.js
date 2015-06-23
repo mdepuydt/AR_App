@@ -2,15 +2,15 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "172.20.10.8";
+var addr = "192.168.0.11";
 var lastMarkerId = null;
-var lastMarkerName = null;
+//var lastMarkerName = null;
 var myScroll;
 var obj = [];
 
 
-function updateLastMarkerName(){
-	document.getElementById('message').placeholder = 'Commenter ' +lastMarkerName;
+function updateLastMarkerName(name){
+	document.getElementById('message').placeholder = 'Commenter ' +name;
 }
 
 function getTextureDetail(detail) {
@@ -42,7 +42,10 @@ function getScrollableDiv(detail, comments){
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
    	canvas.width = detail.dim.width;
-   	canvas.height = detail.dim.height;
+   	//canvas.width = "200";
+   	console.log(comments.length);
+   	canvas.height = 40*(comments.length+1)-10;
+   	//canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
 
     //get a 2D context
@@ -55,7 +58,7 @@ function getScrollableDiv(detail, comments){
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
     for(var i=0; i < comments.length; i++){
-    	context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
+    	context.fillText(comments[i].comment, 30, 40*(i+1)-10);
     }
 
     //create image data from the canvas
@@ -63,7 +66,7 @@ function getScrollableDiv(detail, comments){
     return new arel.Image(newImageData);
 }
 
-function add3DComments(com){
+/*function add3DComments(com){
 
 	if(myComment){
 		for(var i=0; i < myComment.length; i++){
@@ -83,15 +86,14 @@ function add3DComments(com){
 		//TODO créer flèche pour descendre
 		console.info("Plus de 4 commentaires")
 	}
-}
+}*/
 
 function modifyComments(id){
 	comments = getAnnotations(id);
 
 	// ajouter en AR les détails sur le tableau
 	var detail = getDetail(id);
-	lastMarkerName = detail.title;
-	updateLastMarkerName();
+	updateLastMarkerName(detail.title);
     var image = getTextureDetail(detail);
     myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
     myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
@@ -101,7 +103,8 @@ function modifyComments(id){
 	// affichage des commentaires en AR
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
-    myScroll.setScale(myObject.getScale());
+    myScroll.setScale(myObject.getScale()/1.0001);
+    //myScroll.setScale(new arel.Vector3D(5.0,5.0,3.0));
     myScroll.setTranslation(new arel.Vector3D(0.0, -(detail.dim.height+(detail.dim.height/4)), 1.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
@@ -134,8 +137,7 @@ function getComment(com) {
 }
 
 function sendMessage() {
-    console.info(document.getElementById("message").value)
-    if (document.getElementById("message").value != '') {
+    if (document.getElementById("message").value != ''){
 		var comment = {};
 		comment.comment = document.getElementById('message').value;
 		var today = new Date();
@@ -146,7 +148,6 @@ function sendMessage() {
 		addAnnotation(JSON.stringify(comment));
 		document.getElementById('message').value = ("");
 		modifyComments(lastMarkerId);
-		updateLastMarkerName();
     }
 }
 
@@ -173,9 +174,6 @@ arel.ready(function() {
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
     document.getElementById('edit_message').style.display = "none";
     document.getElementById('info').style.display = "block";
-    document.getElementById('scrollable').style.display = "none";
-
-
 });
 
 function trackingHandler(type, param)
@@ -196,9 +194,7 @@ function trackingHandler(type, param)
                 	console.log("touche touche");
                	}
 			}
-
 			document.getElementById('info').style.display = "none";
-			document.getElementById('scrollable').style.display = "block";
 			document.getElementById('edit_message').style.display = "block";
 			lastMarkerId = param[0].getCoordinateSystemID();
 			//TODO prendre gestureHandler pour afficher les commentaires suivants quand on clique sur les commentaires
