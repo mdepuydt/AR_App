@@ -2,14 +2,14 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "172.20.10.2";
+var addr = "172.20.10.8";
 var lastMarkerId = null;
 var lastMarkerName = null;
 var myScroll;
 var obj = [];
 
 function updateLastMarkerName(){
-	document.getElementById('message').placeholder = 'Ecrire un commentaire sur ' +lastMarkerName;
+	document.getElementById('message').placeholder = 'Commenter ' +lastMarkerName;
 }
 
 function getTextureDetail(detail) {
@@ -52,13 +52,8 @@ function getScrollableDiv(detail, comments){
     //draw text (current time)
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
-    //TODO vérifier que le commentaire rentre bien en longueur
-    for(var i=0; i < comments.length; i++){
-    	if(comments[i].comment.length > 20){
+    context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
 
-    	}
-    	context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
-    }
     //create image data from the canvas
     var newImageData = canvas.toDataURL();
     return new arel.Image(newImageData);
@@ -121,7 +116,7 @@ function modifyComments(id){
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
     myScroll.setScale(myObject.getScale());
-    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+(detail.dim.width/2), 0.0, 1.0));
+    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+(detail.dim.width/4), 0.0, 1.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
@@ -151,7 +146,7 @@ function getComment(com) {
 }
 
 function sendMessage() {
-	//TODO ne fonctionne pas quand bouton en haut 
+	//TODO ne fonctionne pas quand bouton en haut
     var comment = {};
     comment.comment = document.getElementById('message').value;
     var today = new Date();
@@ -161,6 +156,7 @@ function sendMessage() {
     comment.author = 'me';
     comments.push(comment);
 	addAnnotation(JSON.stringify(comment));
+	document.getElementById('message').value = ("");
     modifyComments(lastMarkerId);
     updateLastMarkerName();
 }
@@ -179,13 +175,16 @@ function resetPosition() {
 
 var myObject;
 
-arel.ready(function()
-{
+arel.ready(function() {
 	console.log("sceneReady");
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
     document.getElementById('edit_message').style.display = "none";
+    document.getElementById('info').style.display = "block";
+    document.getElementById('scrollable').style.display = "none";
+
+
 });
 
 function trackingHandler(type, param)
@@ -217,7 +216,6 @@ function trackingHandler(type, param)
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)
 		{
-			document.getElementById('info').style.display = "block";
 			document.getElementById('scrollable').style.display = "none";
 		}
 	}
