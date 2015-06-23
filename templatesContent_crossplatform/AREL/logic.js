@@ -67,7 +67,7 @@ function getScrollableDiv(detail, comments) {
     //draw text (current time)
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
-    for(var i=0; i < comments.length; i++){
+    for(var i=comments.length; i > 0; i--){
     	context.fillText(comments[i].comment, 30, 40*(i+1)-10);
     }
 
