@@ -7,9 +7,18 @@ var lastMarkerId = null;
 var lastMarkerName = null;
 var myScroll;
 var obj = [];
+var myObject;
 
+arel.ready(function() {
+    arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
+	//set a listener to tracking to get information about when the image is tracked
+    arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
+    document.getElementById('edit_message').style.display = "none";
+    document.getElementById('info').style.display = "block";
+    document.getElementById('scrollable').style.display = "none";
+});
 
-function updateLastMarkerName(){
+function updateLastMarkerName() {
 	document.getElementById('message').placeholder = 'Commenter ' +lastMarkerName;
 }
 
@@ -38,7 +47,7 @@ function getTextureDetail(detail) {
 	return new arel.Image(newImageData);
 }
 
-function getScrollableDiv(detail, comments){
+function getScrollableDiv(detail, comments) {
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
    	canvas.width = detail.dim.width;
@@ -63,8 +72,7 @@ function getScrollableDiv(detail, comments){
     return new arel.Image(newImageData);
 }
 
-function add3DComments(com){
-
+function add3DComments(com) {
 	if(myComment){
 		for(var i=0; i < myComment.length; i++){
 			console.log("remove");
@@ -85,9 +93,8 @@ function add3DComments(com){
 	}
 }
 
-function modifyComments(id){
+function modifyComments(id) {
 	comments = getAnnotations(id);
-
 	// ajouter en AR les détails sur le tableau
 	var detail = getDetail(id);
 	lastMarkerName = detail.title;
@@ -163,27 +170,10 @@ function resetPosition() {
     sendMessage();
 }
 
-
-
-var myObject;
-
-arel.ready(function() {
-    arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
-	//set a listener to tracking to get information about when the image is tracked
-    arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
-    document.getElementById('edit_message').style.display = "none";
-    document.getElementById('info').style.display = "block";
-    document.getElementById('scrollable').style.display = "none";
-
-
-});
-
-function trackingHandler(type, param)
-{
+function trackingHandler(type, param) {
 	//check if there is tracking information available
 	if (param[0] !== undefined)
-	{
-		//if the pattern is found, hide the information to hold your phone over the pattern
+	{	//if the pattern is found, hide the information to hold your phone over the pattern
 		if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_TRACKING)
 		{
 			if(arel.Events.Object.ONTOUCHSTARTED){
