@@ -2,9 +2,8 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.1.47";
+var addr = "192.168.0.11";
 var lastMarkerId = null;
-//var lastMarkerName = null;
 var myScroll;
 var obj = [];
 var myObject;
@@ -52,10 +51,8 @@ function getScrollableDiv(detail, comments) {
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
    	canvas.width = detail.dim.width;
-   	//canvas.width = "200";
    	console.log(comments.length);
    	canvas.height = 40*(comments.length+1)-10;
-   	//canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
 
     //get a 2D context
@@ -67,8 +64,8 @@ function getScrollableDiv(detail, comments) {
     //draw text (current time)
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
-    for(var i=comments.length; i > 0; i--){
-    	context.fillText(comments[i].comment, 30, 40*(i+1)-10);
+    for(var i=comments.length-1; i >= 0; i--){
+    	context.fillText(comments[i].comment, 30, 40*((comments.length-i)+1)-10);
     }
 
     //create image data from the canvas
@@ -122,7 +119,7 @@ function modifyComments(id) {
     arel.Scene.setObjects(obj);
 }
 
-function getComment(com) {
+/*function getComment(com) {
     //create an HTML5 Canvas
 	canvas = document.createElement("canvas");
 	canvas.width = 100;
@@ -145,7 +142,7 @@ function getComment(com) {
 	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
-}
+}*/
 
 function sendMessage() {
     if (document.getElementById("message").value != ''){
@@ -212,7 +209,6 @@ function trackingHandler(type, param)
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
 		else if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_NOTTRACKING)
 		{
-			document.getElementById('scrollable').style.display = "none";
 		}
 	}
 };
