@@ -42,7 +42,6 @@ var liste_annotations = [];
 
 init();
 
-//TODO vérifier si utile
 function findIndexOf (property, value, array) {
 
 	for (var i=0; i< array.length; i++){
@@ -97,15 +96,17 @@ var getComments = function(art){
 
 // Ajouter dans la base de données une annotation
 var addComment = function(data){
-	//TODO check si l'oeuvre existe dans la base
-	liste_annotations.push(data);
-	fs.writeFile("listeAnnotations.json", JSON.stringify(liste_annotations), function(err) {
-	    if(err) {
-	        console.info(err);
-	    }
-
+	if (findIndexOf("id", data.artwork, liste_oeuvres) != -1) {
+	console.info("Ca ajoute dans la base");
+		liste_annotations.push(data);
+        	fs.writeFile("listeAnnotations.json", JSON.stringify(liste_annotations), function(err) {
+        	    if(err) {
+        	       console.info(err);
+        	    }
 	    console.log("Annotation ajoutée avec succès!");
-	}); 
+		});
+	} else {
+	console.info("Cette oeuvre n'est pas enregistrée dans la base.")}
 }
 
 /*******************************
