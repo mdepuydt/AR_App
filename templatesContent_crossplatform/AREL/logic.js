@@ -52,7 +52,9 @@ function getScrollableDiv(detail, comments){
     //draw text (current time)
     context.fillStyle = "white";
     context.font = 'bold 24pt Helvetica';
-    context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
+    for(var i=0; i < comments.length; i++){
+    	context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
+    }
 
     //create image data from the canvas
     var newImageData = canvas.toDataURL();
