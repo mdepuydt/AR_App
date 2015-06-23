@@ -8,6 +8,7 @@ var lastMarkerName = null;
 var myScroll;
 var obj = [];
 
+
 function updateLastMarkerName(){
 	document.getElementById('message').placeholder = 'Commenter ' +lastMarkerName;
 }
@@ -73,13 +74,13 @@ function add3DComments(com){
 	for(var i=0; i < com.length; i++){
 		var comment = getComment(com[i]);
 		myComment[i] = new arel.Object.Model3D.createFromArelImage(i, comment);
-        //myComment[i].setTranslation(arel.Vector3D.add(myComment.getTranslation(), new arel.Vector3D(100, 0-(i*100), 0)));
         myComment[i].setTranslation(new arel.Vector3D(400.0, 200.0-(i+1.0)*110.0, 1.0));
         myComment[i].setCoordinateSystemID(com[i].artwork);
         arel.Scene.addObject(myComment[i]);
 	}
 	if(com.length > 4){
 		//TODO créer flèche pour descendre
+		console.info("Plus de 4 commentaires")
 	}
 }
 
@@ -118,7 +119,7 @@ function modifyComments(id){
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
     myScroll.setScale(myObject.getScale());
-    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+(detail.dim.width/4), 0.0, 1.0));
+    myScroll.setTranslation(new arel.Vector3D(0.0, -(detail.dim.height+(detail.dim.height/4)), 1.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
@@ -148,19 +149,21 @@ function getComment(com) {
 }
 
 function sendMessage() {
-	//TODO ne fonctionne pas quand bouton en haut
-    var comment = {};
-    comment.comment = document.getElementById('message').value;
-    var today = new Date();
-	comment.artwork = lastMarkerId;
-    //comment.date = today.getDate() + '/' + today.getMonth();
-    comment.date = today;
-    comment.author = 'me';
-    comments.push(comment);
-	addAnnotation(JSON.stringify(comment));
-	document.getElementById('message').value = ("");
-    modifyComments(lastMarkerId);
-    updateLastMarkerName();
+    console.info(document.getElementById("message").value)
+    if (document.getElementById("message").value != '') {
+		var comment = {};
+		comment.comment = document.getElementById('message').value;
+		var today = new Date();
+		comment.artwork = lastMarkerId;
+		//comment.date = today.getDate() + '/' + today.getMonth();
+		comment.date = today;
+		comment.author = 'me';
+		comments.push(comment);
+		addAnnotation(JSON.stringify(comment));
+		document.getElementById('message').value = ("");
+		modifyComments(lastMarkerId);
+		updateLastMarkerName();
+    }
 }
 
 function setPosition() {
@@ -173,7 +176,10 @@ function resetPosition() {
 	var elementStyle = document.getElementById("edit_message").style;
     elementStyle.position = "absolute";
     elementStyle.bottom = "10px";
+    sendMessage();
 }
+
+
 
 var myObject;
 
