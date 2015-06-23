@@ -23,7 +23,6 @@ function getTextureDetail(detail) {
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 255, 0.4)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
-	//context.fillRect(0, 0, canvas.width, canvas.height);
 
 	//draw text (current time)
 	context.fillStyle = "white";
@@ -33,6 +32,7 @@ function getTextureDetail(detail) {
     context.fillText(detail.desc, 10, 110);
     context.fillText(detail.author, 10, 140);
     context.fillText(detail.date, 10, 180);
+
 	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
@@ -44,6 +44,7 @@ function getScrollableDiv(detail, comments){
    	canvas.width = detail.dim.width;
    	canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
+
     //get a 2D context
     var context = canvas.getContext('2d');
     //draw transparent background
@@ -86,24 +87,6 @@ function add3DComments(com){
 
 function modifyComments(id){
 	comments = getAnnotations(id);
-	// put all the comments in it but only 4 are visible
-
-	//HTML5 élément des commentaires
-	/*
-	var div = document.getElementById("scrollable");
-	div.innerHTML = "Commentaire sur l'oeuvre:<br>";
-	for(var i = 0; i < comments.length; i++){
-		context.fillText(comments[i].comment, 10, 30+(50*(i+1)));
-		div.innerHTML += comments[i].comment;
-		div.innerHTML += "<br>";
-		div.innerHTML += "------";
-		div.innerHTML += "<br>";
-
-
-	}*/
-	// affichage de chaque commentaire dans un object différent
-	//add3DComments(comments);
-	//create image data from the canvas
 
 	// ajouter en AR les détails sur le tableau
 	var detail = getDetail(id);
@@ -130,11 +113,13 @@ function getComment(com) {
 	canvas = document.createElement("canvas");
 	canvas.width = 100;
 	canvas.height = 50;
+
 	//get a 2D context
 	var context = canvas.getContext('2d');
 	//draw transparent background
 	context.fillStyle = "rgba(0, 0, 0, 0.4)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
+
 	//draw text
 	context.fillStyle = "black";
 	context.font = '24pt Helvetica';
@@ -142,10 +127,10 @@ function getComment(com) {
 	context.font = '16pt Helvetica';
     context.fillText(com.author, 10, 80);
     context.fillText(com.date, 320, 25);
+
 	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
 	return new arel.Image(newImageData);
-	//return com.comment;
 }
 
 function sendMessage() {
@@ -155,7 +140,6 @@ function sendMessage() {
 		comment.comment = document.getElementById('message').value;
 		var today = new Date();
 		comment.artwork = lastMarkerId;
-		//comment.date = today.getDate() + '/' + today.getMonth();
 		comment.date = today;
 		comment.author = 'me';
 		comments.push(comment);
@@ -184,7 +168,6 @@ function resetPosition() {
 var myObject;
 
 arel.ready(function() {
-	console.log("sceneReady");
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
