@@ -97,7 +97,6 @@ var getComments = function(art){
 // Ajouter dans la base de données une annotation
 var addComment = function(data){
 	if (findIndexOf("id", data.artwork, liste_oeuvres) != -1) {
-	console.info("Ca ajoute dans la base");
 		liste_annotations.push(data);
         	fs.writeFile("listeAnnotations.json", JSON.stringify(liste_annotations), function(err) {
         	    if(err) {
@@ -119,7 +118,6 @@ app.options('*', cors());
 
 // Obtenir la liste de toutes les oeuvres présentes dans la base de données
 app.get("/api/oeuvres", function(req, res){
-	console.log("Get oeuvres");
 	res.type("application/json");
 	res.json(liste_oeuvres);
 });
@@ -127,14 +125,12 @@ app.get("/api/oeuvres", function(req, res){
 // Obtenir le détail d'une oeuvre particulière
 app.get("/api/oeuvre/:id", function(req, res){
 	res.type("application/json");
-	console.log("Get oeuvre id: "+req.params.id);
 	var resp = liste_oeuvres[findIndexOf("id", req.params.id, liste_oeuvres)];
 	res.json(resp);
 });
 
 // Obtenir la liste des commentaires d'une oeuvre
 app.get("/api/comments/:artwork", function(req, res){
-	console.log("Get comments artwork: "+ req.params.artwork);
 	res.type("application/json");
 	var resp = getComments(req.params.artwork);
 	res.json(resp);
@@ -142,7 +138,6 @@ app.get("/api/comments/:artwork", function(req, res){
 
 app.use(bodyParser.json());
 
-//ne pas oublier de mettre le content-type - application/json
 
 // Ajouter une annotation à une oeuvre
 app.post("/api/comment", function(req, res){
@@ -151,7 +146,6 @@ app.post("/api/comment", function(req, res){
 
 		return res.send("Error 400: Bad Input, artwork and comment required");
 	}
-	console.log(req.body);
 	addComment(req.body);
 	res.json({success:true}); 
 });
