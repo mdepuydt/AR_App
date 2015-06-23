@@ -2,9 +2,15 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.0.11";
+var addr = "172.20.10.2";
 var lastMarkerId = null;
+var lastMarkerName = null;
+var myScroll;
 var obj = [];
+
+function updateLastMarkerName(){
+	document.getElementById('message').placeholder = 'Ecrire un commentaire sur ' +lastMarkerName;
+}
 
 function getTextureDetail(detail) {
 	//create an HTML5 Canvas
@@ -48,6 +54,9 @@ function getScrollableDiv(detail, comments){
     context.font = 'bold 24pt Helvetica';
     //TODO vérifier que le commentaire rentre bien en longueur
     for(var i=0; i < comments.length; i++){
+    	if(comments[i].comment.length > 20){
+
+    	}
     	context.fillText(comments[i].comment, 30, (detail.dim.height/4)*(i+1)-10);
     }
     //create image data from the canvas
@@ -100,6 +109,8 @@ function modifyComments(id){
 
 	// ajouter en AR les détails sur le tableau
 	var detail = getDetail(id);
+	lastMarkerName = detail.title;
+	updateLastMarkerName();
     var image = getTextureDetail(detail);
     myObject = new arel.Object.Model3D.createFromArelImage("myObject", image);
     myObject.setScale(new arel.Vector3D(5.0, 5.0, 5.0));
@@ -110,11 +121,10 @@ function modifyComments(id){
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
     myScroll.setScale(myObject.getScale());
-    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+5.0, 0.0, 1.0));
+    myScroll.setTranslation(new arel.Vector3D(detail.dim.width+(detail.dim.width/2), 0.0, 1.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
-
 }
 
 function getComment(com) {
@@ -144,7 +154,6 @@ function sendMessage() {
 	//TODO ne fonctionne pas quand bouton en haut 
     var comment = {};
     comment.comment = document.getElementById('message').value;
-    document.getElementById('message').value = "";
     var today = new Date();
 	comment.artwork = lastMarkerId;
     //comment.date = today.getDate() + '/' + today.getMonth();
@@ -153,6 +162,7 @@ function sendMessage() {
     comments.push(comment);
 	addAnnotation(JSON.stringify(comment));
     modifyComments(lastMarkerId);
+    updateLastMarkerName();
 }
 
 function setPosition() {
@@ -175,6 +185,7 @@ arel.ready(function()
     arel.Scene.setTrackingConfiguration("../TrackingData_MarkerlessFast.xml");
 	//set a listener to tracking to get information about when the image is tracked
     arel.Events.setListener(arel.Scene, function(type, param){trackingHandler(type, param);});
+    document.getElementById('edit_message').style.display = "none";
 });
 
 function trackingHandler(type, param)
@@ -185,6 +196,17 @@ function trackingHandler(type, param)
 		//if the pattern is found, hide the information to hold your phone over the pattern
 		if (type == arel.Events.Scene.ONTRACKING && param[0].getState() == arel.Tracking.STATE_TRACKING)
 		{
+			if(arel.Events.Object.ONTOUCHSTARTED){
+				console.log(arel.Events.Object.ONTOUCHSTARTED);
+
+			}
+			if(myScroll){
+				console.log("in");
+				if(myScroll.ONTOUCHSTARTED){
+                	console.log("touche touche");
+               	}
+			}
+
 			document.getElementById('info').style.display = "none";
 			document.getElementById('scrollable').style.display = "block";
 			document.getElementById('edit_message').style.display = "block";
@@ -197,8 +219,6 @@ function trackingHandler(type, param)
 		{
 			document.getElementById('info').style.display = "block";
 			document.getElementById('scrollable').style.display = "none";
-			//TODO idée: laisser afficher si le lastMarker different de null si difficile d'écrire quand on reste focus sur l'image?
-			document.getElementById('edit_message').style.display = "none";
 		}
 	}
 };
