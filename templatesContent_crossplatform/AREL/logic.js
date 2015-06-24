@@ -76,23 +76,45 @@ function getScrollableDiv(detail, comments) {
    	canvas = document.createElement("canvas");
    	//canvas.width = (detail.dim.width*(40*(comments.length+1)-10))/detail.dim.height;
    	canvas.width = detail.dim.width;
-   	console.log(comments.length);
-   	canvas.height = 40*(comments.length+1)-10;
+   	//canvas.height = 40*(comments.length+1)-10;
+   	canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
 
     //get a 2D context
     var context = canvas.getContext('2d');
     //draw transparent background
-    //context.fillStyle = "rgba(0, 0, 0, 0.4)";
-    context.fillStyle = "rgba(255, 255, 255, 0)";
+    context.fillStyle = "rgba(0, 0, 0, 0.4)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     //draw text (current time)
     context.fillStyle = "black";
     //context.fillStyle = "white";
+    //var fontSize = (5* (canvas.width/canvas.height))/(detail.dim.width/detail.dim.height);
     context.font = '16pt Helvetica';
+    //context.font = fontSize + 'pt Helvetica';
+    var double = 0;
     for(var i=comments.length-1; i >= 0; i--){
-    	context.fillText(comments[i].comment, 30, 40*((comments.length-i)+1)-40);
+	if(i%2==0){
+		context.font = 'bold 16pt Helvetica';
+	} else {
+		context.font = '16pt Helvetica';
+	}
+   	if(comments[i].comment.length > 40){
+            	var array = comments[i].comment.split(" ");
+            	var line2 = array[array.length-2].concat(" "+array[array.length-1]);
+            	console.log(line2);
+            	console.log(array[array.length-2]);
+            	var line1 = "";
+            	for(var j=0; j < array.length-2; j+=2){
+					line1 += array[j].concat(" "+array[j+1]+" ");
+            	}
+            	double++;
+            	context.fillText(line1, 10, 40*((comments.length-i)+1)-40);
+            	context.fillText(line2, 10, 40*((comments.length-i+double)+1)-50);
+            } else {
+            	context.fillText(comments[i].comment, 10, 40*((comments.length-i+double)+1)-40);
+            }
+
     }
 
     //create image data from the canvas
@@ -140,7 +162,8 @@ function modifyComments(id) {
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
     myScroll.setScale(myObject.getScale());
     //myScroll.setScale(new arel.Vector3D(5.0,5.0,3.0));
-    myScroll.setTranslation(new arel.Vector3D((detail.dim.width/1.5), -(detail.dim.height+(detail.dim.height/4)), 0.0));
+    //myScroll.setTranslation(new arel.Vector3D((detail.dim.width/1.5), -(detail.dim.height+(detail.dim.height/4)), 0.0));
+    myScroll.setTranslation(new arel.Vector3D(0.0, -(detail.dim.height+(detail.dim.height/4)), 0.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
