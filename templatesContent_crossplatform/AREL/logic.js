@@ -2,7 +2,8 @@ var earthOpened = false;
 var earth, earthOcclusion, earthIndicators;
 var currentQRCode = null;
 var notTrackingTimer = null;
-var addr = "192.168.0.11";
+// variable à changer suivant l'adresse IP sur laquelle le serveur tourne
+var addr = "172.20.10.2";
 var lastMarkerId = null;
 var myScroll;
 var obj = [];
@@ -74,9 +75,7 @@ function getTextureDetail(detail) {
 function getScrollableDiv(detail, comments) {
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
-   	//canvas.width = (detail.dim.width*(40*(comments.length+1)-10))/detail.dim.height;
    	canvas.width = detail.dim.width;
-   	//canvas.height = 40*(comments.length+1)-10;
    	canvas.height = detail.dim.height;
    	canvas.style.overflow = "scroll";
 
@@ -86,12 +85,9 @@ function getScrollableDiv(detail, comments) {
     context.fillStyle = "rgba(0, 0, 0, 0.4)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    //draw text (current time)
-    context.fillStyle = "black";
-    //context.fillStyle = "white";
-    //var fontSize = (5* (canvas.width/canvas.height))/(detail.dim.width/detail.dim.height);
+    //draw text
+    context.fillStyle = "white";
     context.font = '16pt Helvetica';
-    //context.font = fontSize + 'pt Helvetica';
     var double = 0;
     for(var i=comments.length-1; i >= 0; i--){
 	if(i%2==0){
@@ -99,14 +95,14 @@ function getScrollableDiv(detail, comments) {
 	} else {
 		context.font = '16pt Helvetica';
 	}
+	// afficher les longs commentaires sur 2 lignes
    	if(comments[i].comment.length > 40){
             	var array = comments[i].comment.split(" ");
-            	var line2 = array[array.length-2].concat(" "+array[array.length-1]);
+            	var line2 = array[array.length-4].concat(" "+array[array.length-3]+" "+array[array.length-2]+" "+array[array.length-1]);
             	console.log(line2);
-            	console.log(array[array.length-2]);
             	var line1 = "";
-            	for(var j=0; j < array.length-2; j+=2){
-					line1 += array[j].concat(" "+array[j+1]+" ");
+            	for(var j=0; j < array.length-4; j++){
+					line1 += array[j].concat(" ");
             	}
             	double++;
             	context.fillText(line1, 10, 40*((comments.length-i)+1)-40);
@@ -121,30 +117,6 @@ function getScrollableDiv(detail, comments) {
     var newImageData = canvas.toDataURL();
     return new arel.Image(newImageData);
 }
-
-
-/*function add3DComments(com){
-
-
-	if(myComment){
-		for(var i=0; i < myComment.length; i++){
-			console.log("remove");
-			arel.Scene.removeObject(i);
-		}
-	}
-	var myComment = [];
-	for(var i=0; i < com.length; i++){
-		var comment = getComment(com[i]);
-		myComment[i] = new arel.Object.Model3D.createFromArelImage(i, comment);
-        myComment[i].setTranslation(new arel.Vector3D(400.0, 200.0-(i+1.0)*110.0, 1.0));
-        myComment[i].setCoordinateSystemID(com[i].artwork);
-        arel.Scene.addObject(myComment[i]);
-	}
-	if(com.length > 4){
-		//TODO créer flèche pour descendre
-		console.info("Plus de 4 commentaires")
-	}
-}*/
 
 function modifyComments(id) {
 	comments = getAnnotations(id);
@@ -161,38 +133,11 @@ function modifyComments(id) {
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
     myScroll.setScale(myObject.getScale());
-    //myScroll.setScale(new arel.Vector3D(5.0,5.0,3.0));
-    //myScroll.setTranslation(new arel.Vector3D((detail.dim.width/1.5), -(detail.dim.height+(detail.dim.height/4)), 0.0));
     myScroll.setTranslation(new arel.Vector3D(0.0, -(detail.dim.height+(detail.dim.height/4)), 0.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
 }
-
-/*function getComment(com) {
-    //create an HTML5 Canvas
-	canvas = document.createElement("canvas");
-	canvas.width = 100;
-	canvas.height = 50;
-
-	//get a 2D context
-	var context = canvas.getContext('2d');
-	//draw transparent background
-	context.fillStyle = "rgba(0, 0, 0, 0.4)";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-
-	//draw text
-	context.fillStyle = "black";
-	context.font = '24pt Helvetica';
-	context.fillText(com.comment, 10, 30);
-	context.font = '16pt Helvetica';
-    context.fillText(com.author, 10, 80);
-    context.fillText(com.date, 320, 25);
-
-	//create image data from the canvas
-	var newImageData = canvas.toDataURL();
-	return new arel.Image(newImageData);
-}*/
 
 function sendMessage() {
     if (document.getElementById("message").value != ''){
@@ -253,7 +198,6 @@ function trackingHandler(type, param)
 			document.getElementById('info').style.display = "none";
 			document.getElementById('edit_message').style.display = "block";
 			lastMarkerId = param[0].getCoordinateSystemID();
-			//TODO prendre gestureHandler pour afficher les commentaires suivants quand on clique sur les commentaires
 			modifyComments(lastMarkerId);
 		}
 		//if the pattern is lost tracking, show the information to hold your phone over the pattern
