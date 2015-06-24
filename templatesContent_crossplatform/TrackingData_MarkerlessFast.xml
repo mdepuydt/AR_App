@@ -148,7 +148,7 @@
 			<SensorCOS>
 			<SensorCosID>Patch4</SensorCosID>
 			<Parameters>
-				<ReferenceImage WidthMM="650" HeightMM="440">earthTarget.jpg</ReferenceImage>
+				<ReferenceImage WidthMM="240" HeightMM="240">earthTarget.jpg</ReferenceImage>
 				<SimilarityThreshold>0.8</SimilarityThreshold>
 			</Parameters>
 		</SensorCOS>

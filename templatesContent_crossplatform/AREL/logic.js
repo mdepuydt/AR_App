@@ -38,9 +38,33 @@ function getTextureDetail(detail) {
 	context.font = 'bold 24pt Helvetica';
 	context.fillText(detail.title, 10, 50);
 	context.font = '20pt Helvetica';
-    context.fillText(detail.desc, 10, 110);
-    context.fillText(detail.author, 10, 140);
-    context.fillText(detail.date, 10, 180);
+
+    if(detail.desc.length > 25){
+    	var array = detail.desc.split(" ");
+    	var lines = [];
+    	var line ="";
+    	var i= 0;
+    	while(lines.length < (detail.desc.length%25)){
+    		console.log(line);
+    		while(line.length < 25 && i < array.length){
+    			console.log(line);
+    			if(array[i+1]){
+    				line += array[i].concat(" "+array[i+1]+" ");
+    			} else {
+    				line += array[i];
+    			}
+                i+=2;
+            }
+            lines.push(line);
+            context.fillText(line, 10, 80+(lines.length*30));
+            line = "";
+    	}
+    	//context.fillText("longue description", 10, 140);
+    } else {
+    	context.fillText(detail.desc, 10, 110);
+    }
+    context.fillText(detail.author, 10, 240);
+    context.fillText(detail.date, 10, 280);
 
 	//create image data from the canvas
 	var newImageData = canvas.toDataURL();
@@ -50,6 +74,7 @@ function getTextureDetail(detail) {
 function getScrollableDiv(detail, comments) {
    	//create an HTML5 Div
    	canvas = document.createElement("canvas");
+   	//canvas.width = (detail.dim.width*(40*(comments.length+1)-10))/detail.dim.height;
    	canvas.width = detail.dim.width;
    	console.log(comments.length);
    	canvas.height = 40*(comments.length+1)-10;
@@ -58,14 +83,16 @@ function getScrollableDiv(detail, comments) {
     //get a 2D context
     var context = canvas.getContext('2d');
     //draw transparent background
-    context.fillStyle = "rgba(0, 0, 0, 0.4)";
+    //context.fillStyle = "rgba(0, 0, 0, 0.4)";
+    context.fillStyle = "rgba(255, 255, 255, 0)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     //draw text (current time)
-    context.fillStyle = "white";
-    context.font = 'bold 24pt Helvetica';
+    context.fillStyle = "black";
+    //context.fillStyle = "white";
+    context.font = '16pt Helvetica';
     for(var i=comments.length-1; i >= 0; i--){
-    	context.fillText(comments[i].comment, 30, 40*((comments.length-i)+1)-10);
+    	context.fillText(comments[i].comment, 30, 40*((comments.length-i)+1)-40);
     }
 
     //create image data from the canvas
@@ -111,9 +138,9 @@ function modifyComments(id) {
 	// affichage des commentaires en AR
    	var scroll = getScrollableDiv(detail, comments);
    	myScroll = new arel.Object.Model3D.createFromArelImage("myScroll", scroll);
-    myScroll.setScale(myObject.getScale()/1.0001);
+    myScroll.setScale(myObject.getScale());
     //myScroll.setScale(new arel.Vector3D(5.0,5.0,3.0));
-    myScroll.setTranslation(new arel.Vector3D(0.0, -(detail.dim.height+(detail.dim.height/4)), 1.0));
+    myScroll.setTranslation(new arel.Vector3D((detail.dim.width/1.5), -(detail.dim.height+(detail.dim.height/4)), 0.0));
     myScroll.setCoordinateSystemID(id);
     obj.push(myScroll);
     arel.Scene.setObjects(obj);
